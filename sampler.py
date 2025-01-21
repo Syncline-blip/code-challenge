@@ -48,17 +48,20 @@ def closest_word(word: str, possibilities: list[str]):
     >>> closest_word('arakeat', ['zzzzzzzz', 'parakeet'])
     'parakeet'
     """
-    close_word = ""
-    lcs_length = -1
+    try:
 
-    for closest in possibilities:
-        temp_length = lcs(word, closest, len(word), len(closest))
-        if temp_length > lcs_length:
-            lcs_length = temp_length
-            close_word = closest
+        close_word = ""
+        lcs_length = -1
 
-    return close_word
-    raise NotImplementedError()
+        for closest in possibilities:
+            temp_length = lcs(word, closest, len(word), len(closest))
+            if temp_length > lcs_length:
+                lcs_length = temp_length
+                close_word = closest
+        return close_word
+    except:
+
+        raise NotImplementedError()
 
 
 # ---- 3.
