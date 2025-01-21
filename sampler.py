@@ -11,6 +11,7 @@ import doctest
 from pathlib import Path
 from dataclasses import dataclass
 import datetime
+import os
 
 # ---- 1.
 # Write a function that accepts two Paths and returns the portion of the first Path that is not
@@ -22,8 +23,19 @@ def relative_to_common_base(path1: Path, path2: Path) -> Path:
     >>> relative_to_common_base(Path('/home/daniel/git/ws/py311/test.yaml'), Path('/home/daniel/git/slippers'))
     PosixPath('ws/py311/test.yaml')
     """
-    raise NotImplementedError()
+    relative_path = os.path.relpath(path1, path2).replace(os.sep, "/")
+    return Path(relative_path.lstrip("./"))
 
+# LCS Solution, this is a naive implementation
+# x,y where the lengh of x is first string, and y to second string
+def lcs(first_string, second_string, x,y):
+    if x == 0 or y == 0:
+        return 0
+    elif first_string[x-1] == second_string[y-1]:
+        return 1 + lcs(first_string, second_string, x-1, y-1)
+    else:
+        return (max(lcs(first_string, second_string, x, y-1), lcs(first_string,second_string, x-1, y)))
+    
 # ---- 2.
 # Write a function that accepts a string as the first parameter, and a
 # list of strings as the second parameter, and returns a string from the
@@ -36,6 +48,16 @@ def closest_word(word: str, possibilities: list[str]):
     >>> closest_word('arakeat', ['zzzzzzzz', 'parakeet'])
     'parakeet'
     """
+    close_word = ""
+    lcs_length = -1
+
+    for closest in possibilities:
+        temp_length = lcs(word, closest, len(word), len(closest))
+        if temp_length > lcs_length:
+            lcs_length = temp_length
+            close_word = closest
+
+    return close_word
     raise NotImplementedError()
 
 
