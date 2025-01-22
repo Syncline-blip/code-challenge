@@ -116,6 +116,7 @@ def speed_at_time(at_time: float | int, path: list[PointInTime]) -> str:
             if (start.ts.timestamp() <= (start.ts.timestamp()+at_time) <= end.ts.timestamp()):
                 distance = sqrt((end.x - start.x)**2 + (end.y - start.y)**2) # by euclidean distance
                 
+                
                 speed = distance / total_time if total_time > 0 else 0 
                 return f"{speed:.2f}"
 
