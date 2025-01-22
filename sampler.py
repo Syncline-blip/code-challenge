@@ -80,6 +80,8 @@ class PointInTime:
 
 
 def speed_at_time(at_time: float | int, path: list[PointInTime]) -> str:
+    
+    ''' the list contains the end time of i.e 20 seconds?'''
     """
     >>> now = datetime.datetime.now()
     >>> speed_at_time(10, [PointInTime(x=0, y=0, ts=now), PointInTime(x=0, y=10, ts=now + datetime.timedelta(seconds=20))])
@@ -87,11 +89,22 @@ def speed_at_time(at_time: float | int, path: list[PointInTime]) -> str:
     """
 
     '''
+        list of type stamps at points x and y 
+        Therefore let list be represented as (x, y, t) where t is the timestamp
         What I would need:
-            - Speed between each points in both lines (no!)
-            - Time between two points t = end time minus start time
+            - Speed between each points
+            - Time between two points t = end time - start time
             - Distance between two points  d = sqrt((x2-x1)^2 + (y2 - y1)^2) (euclidian distance)
             - instantenous speed at given time stamp s = d/t
+            
+        
+        The task at hand is simply, What is the vehicle's speed at i.e 10 seconds?
+        Therefore, given the above assumptions:
+            1. I would first need to calculate the distance, using euclidean distance to find distance from 2 points
+            2. I would then need to find the total time, which is ts, as given.
+            3. Calculate the speed by s = d/t to get the speed
+
+        
     '''
 
 
