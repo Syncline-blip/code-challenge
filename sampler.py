@@ -88,7 +88,7 @@ def speed_at_time(at_time: float | int, path: list[PointInTime]) -> str:
 
     '''
         What I would need:
-        
+            - Speed between each points in both lines (no!)
             - Time between two points t = end time minus start time
             - Distance between two points  d = sqrt((x2-x1)^2 + (y2 - y1)^2) (euclidian distance)
             - instantenous speed at given time stamp s = d/t
