@@ -85,6 +85,16 @@ def speed_at_time(at_time: float | int, path: list[PointInTime]) -> str:
     >>> speed_at_time(10, [PointInTime(x=0, y=0, ts=now), PointInTime(x=0, y=10, ts=now + datetime.timedelta(seconds=20))])
     '0.50'
     """
+
+    '''
+        What I would need:
+        
+            - Time between two points t = end time minus start time
+            - Distance between two points  d = sqrt((x2-x1)^2 + (y2 - y1)^2) (euclidian distance)
+            - instantenous speed at given time stamp s = d/t
+    '''
+
+
     raise NotImplementedError()
 
 
