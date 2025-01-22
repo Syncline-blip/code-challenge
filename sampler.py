@@ -103,13 +103,21 @@ def speed_at_time(at_time: float | int, path: list[PointInTime]) -> str:
     try:
         # First Edit: At this stage, I have completely forgot to account for at_time, where the speed should be calculated for when its at_time, not at the end.
         # I would need to account for the fact if at_time is within range of the given timestamp (?)
-        start = path[0]
-        end = path[1]
+        # I'd need to check if at_time is in range of the given time delta, then calculate speed.
         
-        distance = sqrt((end.x - start.x)**2 + (end.y - start.y)**2) # by euclidean distance
-        total_time = (end.ts-start.ts).total_seconds()
-        speed = distance / total_time if total_time > 0 else 0 
-        return f"{speed:.2f}"
+        for i in range(len(path)-1):
+            
+            start = path[i]
+            end = path[i+1] # i want the next point
+            total_time = (end.ts-start.ts).total_seconds()
+            
+            # Now check if it falls between the starting timestamp, and the end
+            # need to check if the starting time stamp is greater than or equal to the time past the start + timestamp then we 
+            if (start.ts.timestamp() <= (start.ts.timestamp()+at_time) <= end.ts.timestamp()):
+                distance = sqrt((end.x - start.x)**2 + (end.y - start.y)**2) # by euclidean distance
+                
+                speed = distance / total_time if total_time > 0 else 0 
+                return f"{speed:.2f}"
 
     except:
 
