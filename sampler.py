@@ -35,7 +35,7 @@ def lcs(first_string, second_string, x,y):
         return 1 + lcs(first_string, second_string, x-1, y-1)
     else:
         return (max(lcs(first_string, second_string, x, y-1), lcs(first_string,second_string, x-1, y)))
-    
+
 # ---- 2.
 # Write a function that accepts a string as the first parameter, and a
 # list of strings as the second parameter, and returns a string from the
