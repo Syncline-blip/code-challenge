@@ -12,19 +12,20 @@ from pathlib import Path
 from dataclasses import dataclass
 import datetime
 import os
+from math import sqrt
 
 # ---- 1.
 # Write a function that accepts two Paths and returns the portion of the first Path that is not
 # common with the second, which is to say portion of the first path starting from where the two
 # paths diverged.
 # p.s. bonus points for thinking of a better name for this function and its parameters
-def relative_to_common_base(path1: Path, path2: Path) -> Path:
-    """
-    >>> relative_to_common_base(Path('/home/daniel/git/ws/py311/test.yaml'), Path('/home/daniel/git/slippers'))
-    PosixPath('ws/py311/test.yaml')
-    """
-    relative_path = os.path.relpath(path1, path2).replace(os.sep, "/")
-    return Path(relative_path.lstrip("./"))
+# def relative_to_common_base(path1: Path, path2: Path) -> Path:
+#     """
+#     >>> relative_to_common_base(Path('/home/daniel/git/ws/py311/test.yaml'), Path('/home/daniel/git/slippers'))
+#     PosixPath('ws/py311/test.yaml')
+#     """
+#     relative_path = os.path.relpath(path1, path2).replace(os.sep, "/")
+#     return Path(relative_path.lstrip("./"))
 
 # LCS Solution, this is a naive implementation
 # x,y where the lengh of x is first string, and y to second string
@@ -47,6 +48,8 @@ def closest_word(word: str, possibilities: list[str]):
     'potato'
     >>> closest_word('arakeat', ['zzzzzzzz', 'parakeet'])
     'parakeet'
+    >>> closest_word('parakeet', ['zzzzzzzz', 'arakis'])
+    'arakis'
     """
     try:
 
@@ -80,35 +83,36 @@ class PointInTime:
 
 
 def speed_at_time(at_time: float | int, path: list[PointInTime]) -> str:
-    
-    ''' the list contains the end time of i.e 20 seconds?'''
+
     """
     >>> now = datetime.datetime.now()
     >>> speed_at_time(10, [PointInTime(x=0, y=0, ts=now), PointInTime(x=0, y=10, ts=now + datetime.timedelta(seconds=20))])
     '0.50'
+    
+    # My own testing, please ignore
+    >>> now = datetime.datetime.now()
+    >>> speed_at_time(5, [PointInTime(x=0, y=0, ts=now), PointInTime(x=0, y=10, ts=now + datetime.timedelta(seconds=10))])
+    '1.00'
+    
+    # Test Case where i asked an AI to test my code:
+    >>> now = datetime.datetime.now()
+    >>> speed_at_time(20, [PointInTime(x=0, y=0, ts=now), PointInTime(x=0, y=30, ts=now + datetime.timedelta(seconds=40))])
+    '0.75'
     """
 
-    '''
-        list of type stamps at points x and y 
-        Therefore let list be represented as (x, y, t) where t is the timestamp
-        What I would need:
-            - Speed between each points
-            - Time between two points t = end time - start time
-            - Distance between two points  d = sqrt((x2-x1)^2 + (y2 - y1)^2) (euclidian distance)
-            - instantenous speed at given time stamp s = d/t
-            
+    try:
         
-        The task at hand is simply, What is the vehicle's speed at i.e 10 seconds?
-        Therefore, given the above assumptions:
-            1. I would first need to calculate the distance, using euclidean distance to find distance from 2 points
-            2. I would then need to find the total time, which is ts, as given.
-            3. Calculate the speed by s = d/t to get the speed
+        start = path[0]
+        end = path[1]
 
-        
-    '''
+        distance = sqrt((end.x - start.x)**2 + (end.y - start.y)**2) # by euclidean distance
+        total_time = (end.ts-start.ts).total_seconds()
+        speed = distance / total_time if total_time > 0 else 0 
+        return f"{speed:.2f}"
 
+    except:
 
-    raise NotImplementedError()
+        raise NotImplementedError()
 
 
 if __name__ == '__main__':
