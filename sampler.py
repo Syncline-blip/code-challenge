@@ -8,7 +8,7 @@
 # "real" code :) (comments if appropriate, attention to edge cases etc)
 
 import doctest
-from pathlib import Path
+from pathlib import Path, WindowsPath
 from dataclasses import dataclass
 import datetime
 import os
@@ -19,13 +19,18 @@ from math import sqrt
 # common with the second, which is to say portion of the first path starting from where the two
 # paths diverged.
 # p.s. bonus points for thinking of a better name for this function and its parameters
-# def relative_to_common_base(path1: Path, path2: Path) -> Path:
-#     """
-#     >>> relative_to_common_base(Path('/home/daniel/git/ws/py311/test.yaml'), Path('/home/daniel/git/slippers'))
-#     PosixPath('ws/py311/test.yaml')
-#     """
-#     relative_path = os.path.relpath(path1, path2).replace(os.sep, "/")
-#     return Path(relative_path.lstrip("./"))
+def relative_to_common_base(path1: Path, path2: Path) -> Path:
+    """
+  
+    
+    >>> relative_to_common_base(Path('/home/daniel/git/ws/py311/test.yaml'), Path('/home/daniel/git/slippers'))
+    WindowsPath('ws/py311/test.yaml')
+    """
+    relative_path = os.path.relpath(path1, path2)
+    if relative_path.startswith(".."):
+        relative_path = relative_path.lstrip("..").lstrip(os.sep)
+
+    return Path(relative_path)  # Should return posix if tester is using Posix, just gotta change the test case
 
 # LCS Solution, this is a naive implementation
 # x,y where the lengh of x is first string, and y to second string
@@ -114,10 +119,12 @@ def speed_at_time(at_time: float | int, path: list[PointInTime]) -> str:
             # Now check if it falls between the starting timestamp, and the end
             # need to check if the starting time stamp is greater than or equal to the time past the start + timestamp then we 
             if (start.ts.timestamp() <= (start.ts.timestamp()+at_time) <= end.ts.timestamp()):
+                
+                # How do I find the position of the car at 5 seconds?
+                # could use interpolation and find the time difference between the start and at_time to get the total time
+
                 distance = sqrt((end.x - start.x)**2 + (end.y - start.y)**2) # by euclidean distance
-                
-                
-                speed = distance / total_time if total_time > 0 else 0 
+                speed = distance / total_time if total_time > 0 else 0 # (?) but i would still need to find out what it is at 5 and not at the end
                 return f"{speed:.2f}"
 
     except:
