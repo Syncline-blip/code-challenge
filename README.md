@@ -34,7 +34,7 @@ Question 2: closest_word:
         ELSE (NO MATCH)
             EXCLUDE THE LAST CHARACTER OF BOTH STRINGS, TAKE THE MAXIMUM RESULT
         
-        THE IN THE ACTUAL FUNCTION:
+        IN THE ACTUAL FUNCTION:
             loop through the list, call lcs on word and the list[index]
             update the length and close word if a longer LCS is found, if it finds it then finish.
 
@@ -53,14 +53,33 @@ Question 3 speed_at_time:
             1. Calculate distances between two points using euclidian distance (D = srt(( x 2 − x 1 )^2 + ( y 2 − y 1 )^2))
             2. Find the total time, which is ts, as given
             3. Calculate the speed by s = d/t (note theres an if statement, i don't want to cause a divide by zero error)
+        
+    New logic:
+        Although this works, I have forgot that I need to account for the fact that the question is asking to find the speed at 
+        the time specified in at_time
 
-        Test Cases:
-            Daniel's test cases passes.
-            My test case passes:
-                at_time = 5, What is the vehicle's speed at the time stamp of 5
-                My points are point (0,0) and point (0,10)
-                Distance= √((0−0)^2+(10−0)^2) = 10
-                Our distance is 10
-                
+            ** Therefore, I would have to take in to consideration, the position of the car at 5 seconds which leads to a new problem:
+                -> How do we calculate the position of the car at say at_time = 10? We can already
 
-​
+            Considering the above, we already know how to get the total time, since we have the starting and ending timestamps, using the same idea,
+            we would need to calculate the how much time has passed/total time from start to at_time. then calculate the proprotion, i.e where the vehicle is on its path 
+            at a given time.
+
+            Reference:
+                Total time would be the whole journey
+                Elapsed would be how long Ive been travelling i.e how long car has been driving on the path
+                Proportion, how much have i covered,
+                    Therefore let p (proportion) = e (elapsed) / t (total time)
+                    Which would give us the ratio / proprotion of the travel from point 1 to the perceived point 2 is at 5 seconds
+
+                Assumption:
+                    -> Since it is a straight line, I am safe to assume that we are travelling across the lline linearly, potentially letting us use
+                        linear interpolation to figure out where we are during at_time 5
+
+                        Reference again:
+                            Let linear interpolation (y) = y1 + (x-x1)*(y2-y1)/(x2-x1)
+
+                        There fore let
+                            start.x (y1) end.x (y2) (where the path starts and ends)
+                            x = at_time, x1 = start.ts, x2 = end.ts
+                                and respectivley for the interpolation of y

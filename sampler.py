@@ -122,11 +122,16 @@ def speed_at_time(at_time: float | int, path: list[PointInTime]) -> str:
                 
                 # How do I find the position of the car at 5 seconds?
                 # could use interpolation and find the time difference between the start and at_time to get the total time
+                elapsed = (start.ts.timestamp()+at_time)-start.ts.timestamp()
+                proportion = elapsed/total_time
 
-                distance = sqrt((end.x - start.x)**2 + (end.y - start.y)**2) # by euclidean distance
-                speed = distance / total_time if total_time > 0 else 0 # (?) but i would still need to find out what it is at 5 and not at the end
+                # we need to interpolate, refer to equation
+                x_value = start.x + (end.x - start.x) * proportion
+                y_value = start.y + (end.y - start.y) * proportion
+
+                distance = sqrt((x_value - start.x)**2 + (y_value - start.y)**2) # by euclidean distance
+                speed = distance / elapsed if elapsed > 0 else 0 # use elapsed instead since we need to find the speed at at_timee
                 return f"{speed:.2f}"
-
     except:
 
         raise NotImplementedError()
