@@ -18,9 +18,7 @@ So for example in the test case
 
 since after git/, input two is now different, it should out put ws/py311/test.yaml since it is not relative anymore
 
-the o
- relative_to_common_base(Path('/home/daniel/git/ws/py311/test.yaml'), Path('/home/daniel/git/slippers'))
-    WindowsPath('ws/py311/test.yaml')
+!PLEASE NOTE I HAD TO CHANGE THE TEST CASE TO WindowsPath() as expected as I am working with windows, should work by changing it to Posix()
 
 Question 2: closest_word:
 
