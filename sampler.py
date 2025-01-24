@@ -21,11 +21,8 @@ from math import sqrt
 # p.s. bonus points for thinking of a better name for this function and its parameters
 def relative_to_common_base(path1: Path, path2: Path) -> Path:
     """
-  
-    
     >>> relative_to_common_base(Path('/home/daniel/git/ws/py311/test.yaml'), Path('/home/daniel/git/slippers'))
     WindowsPath('ws/py311/test.yaml')
-
     """
     relative_path = os.path.relpath(path1, path2)
     if relative_path.startswith(".."):
