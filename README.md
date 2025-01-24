@@ -9,6 +9,19 @@
 
 Question 1: relative_to_common_base
 
+I am assuming that the input will always be that they first start of from them same folder i.e that the would both have the same relative path then some how start to diverge, so you would only need to provide where the path changes from path 2
+
+So for example in the test case
+
+/home/daniel/git/ws/py311/test.yaml (input 1)
+/home/daniel/git/slippers (input 2)
+
+since after git/, input two is now different, it should out put ws/py311/test.yaml since it is not relative anymore
+
+the o
+ relative_to_common_base(Path('/home/daniel/git/ws/py311/test.yaml'), Path('/home/daniel/git/slippers'))
+    WindowsPath('ws/py311/test.yaml')
+
 Question 2: closest_word:
 
     This question felt pretty ambiguous as I did not know what the question meant by "most-like", since the example was
